@@ -1,0 +1,40 @@
+---
+- name: "Build and deploy a Quarkus app using Ansible"
+  hosts: localhost
+  gather_facts: true
+  become: true
+  vars:
+    quarkus_app_repo_url: 'https://github.com/quarkusio/quarkus-quickstarts.git'
+    app_name: getting-started
+    quarkus_app_source_folder: getting-started
+    quarkus_app_src_dir: getting-started
+    quarkus_path_to_folder_to_deploy: /opt/quarkus_deploy
+    quarkus_app_workdir: /root/getting-started.git
+  collections:
+    - middleware_automation.quarkus
+  pre_tasks:
+    - name: "Build the Quarkus from {{ quarkus_app_repo_url }}."
+      ansible.builtin.include_role:
+        name: quarkus
+        tasks_from: build.yml
+  tasks:
+    - name: "Deploy Quarkus app on target."
+      ansible.builtin.include_role:
+        name: quarkus
+        tasks_from: deploy.yml
+  post_tasks:
+    - name: Populate service facts
+      ansible.builtin.service_facts:
+
+    - name: "Check that systemd service demo app is running."
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.services is defined
+          - ansible_facts.services["{{ app_name }}.service"] is defined
+          - ansible_facts.services["{{ app_name }}.service"]['state'] == 'running'
+          - ansible_facts.services["{{ app_name }}.service"]['status'] == 'enabled'
+        quiet: true
+
+    - name: "Check that Quarkus app is accessible"
+      ansible.builtin.uri:
+        url: 'http://localhost:8080/'

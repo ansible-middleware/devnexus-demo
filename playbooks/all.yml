@@ -1,0 +1,7 @@
+---
+- import_playbook: prerequisites.yml
+
+- import_playbook: wildfly.yml
+
+- import_playbook: quarkus.yml
+
