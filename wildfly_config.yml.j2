@@ -1,0 +1,18 @@
+---
+wildfly-configuration:
+  system-property:
+    JBOSS_ID:
+      value: "{{ jboss_id | default('instance') }}"
+  subsystem:
+    logging:
+      logger:
+        com.arjuna:
+          level: ERROR
+    messaging-activemq:
+      server:
+        default:
+          jms-queue:
+            testQueue:
+              entries: 
+                - "queue/test"
+                - "java:jboss/exported/jms/queue/test"

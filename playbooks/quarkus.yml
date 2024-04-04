@@ -1,15 +1,8 @@
 ---
 - name: "Build and deploy a Quarkus app using Ansible"
-  hosts: localhost
+  hosts: quarkus
   gather_facts: true
   become: true
-  vars:
-    quarkus_app_repo_url: 'https://github.com/quarkusio/quarkus-quickstarts.git'
-    app_name: getting-started
-    quarkus_app_source_folder: getting-started
-    quarkus_app_src_dir: getting-started
-    quarkus_path_to_folder_to_deploy: /opt/quarkus_deploy
-    quarkus_app_workdir: /root/getting-started.git
   collections:
     - middleware_automation.quarkus
   pre_tasks:
@@ -17,6 +10,11 @@
       ansible.builtin.include_role:
         name: quarkus
         tasks_from: build.yml
+    - name: Creating a file with content
+      copy:
+        dest: "{{ quarkus_app_workdir }}/.env"
+        content: |
+          GREETING_WILDFLY_VM_IP="{{ wildfly_vm_ip }}"
   tasks:
     - name: "Deploy Quarkus app on target."
       ansible.builtin.include_role:
@@ -37,4 +35,4 @@
 
     - name: "Check that Quarkus app is accessible"
       ansible.builtin.uri:
-        url: 'http://localhost:8080/'
+        url: 'http://0.0.0.0:9000/prices.html'

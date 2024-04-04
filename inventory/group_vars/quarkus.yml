@@ -1,0 +1,12 @@
+---
+quarkus_app_repo_url: 'https://github.com/hcherukuri/jms-client.git'
+app_tag: demo
+app_name: jms-client
+quarkus_path_to_folder_to_deploy: /opt/quarkus_deploy
+quarkus_app_workdir: /root/jms-client
+quarkus_java_package_version: 'java-17-openjdk'
+quarkus_builder_host: quarkus-1
+quarkus_app_validation_host: quarkus-1
+quarkus_java_home: /usr/lib/jvm/java-17-openjdk-17.0.10.0.7-2.el9.x86_64/
+quarkus_app_port: 9000
+wildfly_vm_ip: <Enter the wildfly vm ip>

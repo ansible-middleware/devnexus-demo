@@ -1,0 +1,15 @@
+---
+wildfly_config_base: 'standalone-full.xml'
+ansible_nodename: localhost
+wildfly_java_package_name: java-17-openjdk-headless
+wildfly_enable_yml_config: true
+wildfly_yml_configs:
+  - ../wildfly_config.yml.j2
+install_name: 'wildfly'
+configuration_file: "{{ wildfly_home }}/standalone/configuration/wildfly.xml"
+app_deploy_enabled: true
+app:
+  - { name: 'info.war', url: 'https://drive.google.com/uc?export=download&id=13K7RCqccgH4zAU1RfOjYMehNaHB0A3Iq' }
+app_user: 'quickstartUser'
+app_pass: 'quickstartPwd1!'
+app_group: 'guest'

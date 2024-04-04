@@ -1,0 +1,42 @@
+---
+- name: Setup instances for the demo.
+  hosts: all
+  gather_facts: true
+  become: true
+  tasks:
+    - name: "Install packages: {{ packages_to_install }}"
+      ansible.builtin.yum:
+        name: "{{ item }}"
+        state: latest
+      loop: "{{ packages_to_install }}"
+
+    - name: Enable and start the firewalld service
+      become: true
+      ansible.builtin.systemd:
+        name: firewalld
+        enabled: true
+        state: started
+
+    - name: "Configure firewall ports"
+      ansible.posix.firewalld:
+        port: "{{ item }}"
+        permanent: true
+        state: enabled
+        immediate: true
+      loop:
+        - 8009/tcp
+        - 8080/tcp
+        - 9990/tcp
+        - 7600/tcp
+        - 7601/tcp
+        - 9000/tcp
+        - 8081/tcp
+
+    - name: Add IP address of all hosts to all hosts
+      lineinfile:
+        dest: /etc/hosts
+        regexp: '.*{{ item }}$'
+        line: "{{ hostvars[item].ansible_host }} {{item}}"
+        state: present
+      when: hostvars[item].ansible_host is defined
+      with_items: "{{ groups.all }}"

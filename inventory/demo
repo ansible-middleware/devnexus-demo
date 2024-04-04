@@ -1,0 +1,11 @@
+[demo]
+
+[demo:children]
+wildfly
+quarkus
+
+[wildfly]
+wildfly-1 ansible_host=<Enter the wildfly vm ip> ansible_user=root
+
+[quarkus]
+quarkus-1 ansible_host=<Enter the quarkus vm ip> ansible_user=root

@@ -1,0 +1,7 @@
+---
+packages_to_install:
+  - unzip
+  - firewalld
+  - java-17-openjdk
+  - git
+  - net-tools
