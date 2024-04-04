@@ -12,13 +12,13 @@
     - name: Unarchive a file that needs to be downloaded (added in 2.0)
       ansible.builtin.unarchive:
         src: https://www.apache.org/dyn/closer.lua?filename=qpid/broker-j/9.2.0/binaries/apache-qpid-broker-j-9.2.0-bin.tar.gz&action=download
-        dest: /usr/local/bin
+        dest: /usr/local/qpid
         remote_src: yes
         validate_certs: no
     
     - name: Copy initial config file
       ansible.builtin.copy:
-        src: initial-config.json
+        src: ../initial-config.json
         dest: /usr/local/qpid/qpid-broker/9.2.0/bin/
 
     - name: Set qpidwork

@@ -18,7 +18,7 @@
     ansible_nodename: localhost
     wildfly_enable_yml_config: true
     wildfly_yml_configs:
-      - wildfly_config.yml.j2
+      - ../wildfly_config.yml.j2
     install_name: 'wildfly'
     configuration_file: "{{ wildfly_home }}/standalone/configuration/wildfly.xml"
     app_deploy_enabled: true
@@ -55,7 +55,7 @@
         - 9990/tcp
         - 7600/tcp
         - 7601/tcp
-        - 8081/tcp
+        - 8090/tcp
   post_tasks:
     - name: "Deploy apps"
       when:
