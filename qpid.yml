@@ -1,0 +1,30 @@
+---
+- name: Playbook for installing prerequisites
+  hosts: all
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Creates directory for Qpid broker installation
+      ansible.builtin.file:
+        path: /usr/local/qpid
+        state: directory
+    
+    - name: Unarchive a file that needs to be downloaded (added in 2.0)
+      ansible.builtin.unarchive:
+        src: https://www.apache.org/dyn/closer.lua?filename=qpid/broker-j/9.2.0/binaries/apache-qpid-broker-j-9.2.0-bin.tar.gz&action=download
+        dest: /usr/local/bin
+        remote_src: yes
+        validate_certs: no
+    
+    - name: Copy initial config file
+      ansible.builtin.copy:
+        src: initial-config.json
+        dest: /usr/local/qpid/qpid-broker/9.2.0/bin/
+
+    - name: Set qpidwork
+      set_fact: QPID_WORK="/usr/local/qpid/qpid-broker/9.2.0/work"
+    
+    - name: start Apache Qpid HTTP server on 9080
+      ansible.builtin.command: ./qpid-server -icp initial-config.json -prop "qpid.http_port=9080"
+      args:
+        chdir: /usr/local/qpid/qpid-broker/9.2.0/bin/

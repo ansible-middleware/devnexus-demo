@@ -1,15 +1,15 @@
 ---
 - name: "Build and deploy a Quarkus app using Ansible"
-  hosts: localhost
+  hosts: all
   gather_facts: true
   become: true
   vars:
-    quarkus_app_repo_url: 'https://github.com/quarkusio/quarkus-quickstarts.git'
-    app_name: getting-started
-    quarkus_app_source_folder: getting-started
-    quarkus_app_src_dir: getting-started
+    quarkus_app_repo_url: 'https://github.com/amqphub/quarkus-qpid-jms-quickstart.git'
+    app_name: quarkus-qpid-jms-quickstart
     quarkus_path_to_folder_to_deploy: /opt/quarkus_deploy
-    quarkus_app_workdir: /root/getting-started.git
+    quarkus_app_workdir: /root/quarkus-qpid-jms-quickstart.git
+    quarkus_java_home: /usr/lib/jvm/jdk-17-oracle-x64
+    quarkus_app_port: 8090
   collections:
     - middleware_automation.quarkus
   pre_tasks:
@@ -37,4 +37,4 @@
 
     - name: "Check that Quarkus app is accessible"
       ansible.builtin.uri:
-        url: 'http://localhost:8080/'
+        url: 'http://localhost:8090/prices.html'
