@@ -16,6 +16,7 @@
       - firewalld
     wildfly_config_base: 'standalone-full.xml'
     ansible_nodename: localhost
+    wildfly_java_package_name: java-17-openjdk-headless
     wildfly_enable_yml_config: true
     wildfly_yml_configs:
       - ../wildfly_config.yml.j2

@@ -8,7 +8,7 @@
     app_name: quarkus-qpid-jms-quickstart
     quarkus_path_to_folder_to_deploy: /opt/quarkus_deploy
     quarkus_app_workdir: /root/quarkus-qpid-jms-quickstart.git
-    quarkus_java_home: /usr/lib/jvm/jdk-17-oracle-x64
+    # quarkus_java_home: /usr/lib/jvm/jdk-17-oracle-x64
     quarkus_app_port: 8090
   collections:
     - middleware_automation.quarkus
