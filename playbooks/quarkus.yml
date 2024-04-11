@@ -14,7 +14,7 @@
       copy:
         dest: "{{ quarkus_app_workdir }}/.env"
         content: |
-          GREETING_WILDFLY_VM_IP="{{ wildfly_vm_ip }}"
+          GREETING_WILDFLY_VM_IP={{ wildfly_vm_ip }}
   tasks:
     - name: "Deploy Quarkus app on target."
       ansible.builtin.include_role:
