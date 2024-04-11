@@ -8,6 +8,14 @@ wildfly-configuration:
       logger:
         com.arjuna:
           level: ERROR
+    logging/console-handler:
+      CONSOLE:
+        name: level
+        value: DEBUG
+    logging/root-logger:
+      ROOT:
+        name: level
+        value: DEBUG
     messaging-activemq:
       server:
         default:
